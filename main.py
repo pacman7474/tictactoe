@@ -10,6 +10,8 @@ def print_board():
             print(f"|{y}|",end="")
         print("\n---------")
 
+# Check the board to see if there is a winner
+# returns True if a winner is found and False if no winner yet
 def check_board(cur_player):
     # check diagonals (2)
     if check_location(1,1,cur_player): #center
@@ -49,6 +51,9 @@ def check_board(cur_player):
                 return False
     return False
 
+# Checks a specific location on the board
+# returns true if that location has that player's mark
+# used for checking the winning condition
 def check_location(x,y,player):
     if tic_tac_toe_board[x][y] == player:
         # print(f"Loc: {tic_tac_toe_board[x][y]}")
@@ -56,6 +61,9 @@ def check_location(x,y,player):
     else:
         return False
 
+# Recursive function that has the player select a location on the board to play
+# returns the player's mark if the spot is empty
+# recursively calls the function if the spot is already taken
 def player_choose(player,loc,value,dif):
     if tic_tac_toe_board[loc][value-dif] == " ":
         return player
@@ -68,6 +76,7 @@ winner = ""
 spots_left = 9
 while game:
     print_board()
+    # Player 1's turn to select a location
     x_place = int(input("Player 1: Please select a square by number> "))
     if x_place <=3:
         tic_tac_toe_board[0][x_place-1] = player_choose("X",0,x_place,1)
@@ -82,6 +91,7 @@ while game:
     if check_board("X"):
         game = False
         winner = "X"
+    # if Player 1 did not already win, Player 2 gets a turn
     if game:
         o_place = int(input("Player 2: Please select a square by number> "))
         if o_place <= 3:
@@ -98,6 +108,7 @@ while game:
             winner = "O"
         if spots_left == 0:
             game = False
+
 if not winner == "":
     print(f"The winner is {winner}!")
 else:
